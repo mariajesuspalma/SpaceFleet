@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  app:
+    image: 'fleet:latest'
+    build:
+      context: .
+    container_name: app
+    environment:
+      # database user
+      # database password
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+
+    ports:
+      - "8080:8080"

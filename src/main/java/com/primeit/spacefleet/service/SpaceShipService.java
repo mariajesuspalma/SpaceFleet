@@ -1,6 +1,7 @@
 package com.primeit.spacefleet.service;
 
 import com.primeit.spacefleet.domain.SpaceShip;
+import com.primeit.spacefleet.kafka.KafkaProducer;
 import com.primeit.spacefleet.repository.SpaceShipRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -18,6 +19,9 @@ public class SpaceShipService {
     @Autowired
     private SpaceShipRepository spaceShipRepository;
 
+    @Autowired
+    private KafkaProducer kafkaProducer;
+
     @Cacheable(value = "spaceShips")
     public Page<SpaceShip> findAll(Pageable pageable) {
         return spaceShipRepository.findAll(pageable);
@@ -34,12 +38,20 @@ public class SpaceShipService {
 
     @CachePut(value = "spaceShip", key = "#id")
     public SpaceShip update(long id, SpaceShip spaceShip) {
-        return spaceShipRepository.save(spaceShip);
+        SpaceShip updatedSpaceShip = spaceShipRepository.save(spaceShip);
+
+        kafkaProducer.sendEvent(updatedSpaceShip);
+
+        return updatedSpaceShip;
     }
 
     @CachePut(value = "spaceShip")
     public SpaceShip create(SpaceShip spaceShip) {
-        return spaceShipRepository.save(spaceShip);
+        SpaceShip newSpaceShip = spaceShipRepository.save(spaceShip);
+
+        kafkaProducer.sendEvent(newSpaceShip);
+
+        return newSpaceShip;
     }
 
     @CacheEvict(value = "spaceShip", key = "#id")
