@@ -3,6 +3,8 @@ package com.primeit.spacefleet.service;
 import com.primeit.spacefleet.domain.SpaceShip;
 import com.primeit.spacefleet.kafka.KafkaProducer;
 import com.primeit.spacefleet.repository.SpaceShipRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
@@ -16,6 +18,9 @@ import java.util.Optional;
 
 @Service
 public class SpaceShipService {
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
     @Autowired
     private SpaceShipRepository spaceShipRepository;
 
@@ -40,7 +45,14 @@ public class SpaceShipService {
     public SpaceShip update(long id, SpaceShip spaceShip) {
         SpaceShip updatedSpaceShip = spaceShipRepository.save(spaceShip);
 
-        kafkaProducer.sendEvent(updatedSpaceShip);
+        Thread thread = new Thread(() -> {
+            try {
+                kafkaProducer.sendEvent(updatedSpaceShip);
+            }catch (Exception e) {
+                logger.info("An error has occurred while sending the event {}", updatedSpaceShip);
+            }
+        });
+        thread.start();
 
         return updatedSpaceShip;
     }
@@ -49,7 +61,14 @@ public class SpaceShipService {
     public SpaceShip create(SpaceShip spaceShip) {
         SpaceShip newSpaceShip = spaceShipRepository.save(spaceShip);
 
-        kafkaProducer.sendEvent(newSpaceShip);
+        Thread thread = new Thread(() -> {
+            try {
+                kafkaProducer.sendEvent(newSpaceShip);
+            }catch (Exception e) {
+               logger.info("An error has occurred while sending the event {}", newSpaceShip);
+            }
+        });
+        thread.start();
 
         return newSpaceShip;
     }
