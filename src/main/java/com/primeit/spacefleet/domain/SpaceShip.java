@@ -1,6 +1,7 @@
 package com.primeit.spacefleet.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "space_ship")
@@ -10,6 +11,7 @@ public class SpaceShip {
     private long id;
 
     @Column(name = "name")
+    @NotBlank
     private String name;
 
     public SpaceShip() {

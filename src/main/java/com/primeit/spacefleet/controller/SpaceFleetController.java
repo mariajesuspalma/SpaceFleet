@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.data.domain.Page;
@@ -103,7 +104,7 @@ public class SpaceFleetController {
             @ApiResponse(responseCode = "500", description = "Internal error", content = {@Content(mediaType = "application/json",
                     schema = @Schema(implementation = ErrorResponse.class))})})
     @PostMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<SpaceShip> create(@RequestBody SpaceShip spaceShip) {
+    public ResponseEntity<SpaceShip> create(@RequestBody @Valid SpaceShip spaceShip) {
         SpaceShip newSpaceShip = spaceShipService.create(spaceShip);
         return new ResponseEntity<>(newSpaceShip, HttpStatus.OK);
     }
@@ -118,7 +119,7 @@ public class SpaceFleetController {
             @ApiResponse(responseCode = "500", description = "Internal error", content = {@Content(mediaType = "application/json",
                     schema = @Schema(implementation = ErrorResponse.class))})})
     @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<SpaceShip> update(@PathVariable long id, @RequestBody SpaceShip modifiedSpaceShip) throws ChangeSetPersister.NotFoundException, NegativeIdException {
+    public ResponseEntity<SpaceShip> update(@PathVariable long id, @RequestBody @Valid SpaceShip modifiedSpaceShip) throws ChangeSetPersister.NotFoundException, NegativeIdException {
         if (id < 0)
             throw new NegativeIdException();
 
