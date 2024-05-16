@@ -8,7 +8,7 @@ import jakarta.validation.constraints.NotBlank;
 public class SpaceShip {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
     @Column(name = "name")
     @NotBlank
@@ -17,16 +17,16 @@ public class SpaceShip {
     public SpaceShip() {
     }
 
-    public SpaceShip(long id, String name) {
+    public SpaceShip(Long id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

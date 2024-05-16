@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface SpaceShipRepository extends JpaRepository<SpaceShip, Long> {
     Page<SpaceShip> findAll(Pageable pageable);
 
-    Optional<SpaceShip> findById(long id);
+    Optional<SpaceShip> findById(Long id);
 
     List<SpaceShip> findByNameContaining(String name);
 }

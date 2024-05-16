@@ -1,6 +1,5 @@
 package com.primeit.spacefleet.aspect;
 
-import com.primeit.spacefleet.exception.NegativeIdException;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
@@ -17,7 +16,7 @@ public class SpaceShipAnnotationAspect {
 
     @Pointcut("@annotation(org.springframework.web.bind.annotation.GetMapping)")
     public void getMapping() {
-        System.out.println("hola");
+
     }
 
     @AfterThrowing(pointcut = "getMapping()", throwing = "e")

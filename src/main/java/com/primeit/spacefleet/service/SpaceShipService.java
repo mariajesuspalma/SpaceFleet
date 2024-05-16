@@ -33,7 +33,7 @@ public class SpaceShipService {
     }
 
     @Cacheable(value = "spaceShip", key = "#id")
-    public Optional<SpaceShip> findById(long id) {
+    public Optional<SpaceShip> findById(Long id) {
         return spaceShipRepository.findById(id);
     }
 
@@ -42,13 +42,13 @@ public class SpaceShipService {
     }
 
     @CachePut(value = "spaceShip", key = "#id")
-    public SpaceShip update(long id, SpaceShip spaceShip) {
+    public SpaceShip update(Long id, SpaceShip spaceShip) {
         SpaceShip updatedSpaceShip = spaceShipRepository.save(spaceShip);
 
         Thread thread = new Thread(() -> {
             try {
                 kafkaProducer.sendEvent(updatedSpaceShip);
-            }catch (Exception e) {
+            } catch (Exception e) {
                 logger.info("An error has occurred while sending the event {}", updatedSpaceShip);
             }
         });
@@ -64,8 +64,8 @@ public class SpaceShipService {
         Thread thread = new Thread(() -> {
             try {
                 kafkaProducer.sendEvent(newSpaceShip);
-            }catch (Exception e) {
-               logger.info("An error has occurred while sending the event {}", newSpaceShip);
+            } catch (Exception e) {
+                logger.info("An error has occurred while sending the event {}", newSpaceShip);
             }
         });
         thread.start();
@@ -74,7 +74,7 @@ public class SpaceShipService {
     }
 
     @CacheEvict(value = "spaceShip", key = "#id")
-    public void delete(long id) {
+    public void delete(Long id) {
         Optional<SpaceShip> spaceShip = spaceShipRepository.findById(id);
         if (spaceShip.isPresent()) {
             spaceShipRepository.delete(spaceShip.get());

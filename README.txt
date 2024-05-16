@@ -7,10 +7,10 @@ OpenApi 2.5.0
 Kafka 3.1.4
 
 El proyecto ha sido realizado con patrón MVC por ser el que más ha utilizado la desarrolladora a lo largo de su vida laboral. Se ha implementado un producer de Kafka con intención de mantener actualizados a posibles
-sistemas externos que utilicen cachés o necesiten la última versión sobre la información disponible en la base de datos de la flota, por lo que se llama en cada creación y actualización.
+sistemas externos que utilicen cachés o necesiten la última versión sobre la información disponible en la base de datos de la flota, por lo que se llama en cada creación y actualización, en un hilo diferente para no afectar
+al rendimiento de la aplicación.
 
 Mejoras futuras:
 Gestión de excepciones a un nivel mayor de detalle con excepciones propias
-Aumentar la diversidad de casos, tanto negativos como positivos, testeados de forma unitaria
-Test de integración
+Aumentar la diversidad de casos, tanto negativos como positivos, testeados en los tests unitarios y de integración
 Seguridad de la API

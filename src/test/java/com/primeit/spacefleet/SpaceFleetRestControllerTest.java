@@ -105,7 +105,7 @@ public class SpaceFleetRestControllerTest {
 
     @Test
     public void whenInvalidDeleteCallThenReturnsKo() throws Exception {
-        long id = 100l;
+        Long id = 100l;
 
         Mockito.doNothing().when(spaceShipService).delete(id);
 

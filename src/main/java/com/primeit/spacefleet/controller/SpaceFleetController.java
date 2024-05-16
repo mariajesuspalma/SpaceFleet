@@ -65,7 +65,7 @@ public class SpaceFleetController {
             @ApiResponse(responseCode = "500", description = "Internal error", content = {@Content(mediaType = "application/json",
                     schema = @Schema(implementation = ErrorResponse.class))})})
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<SpaceShip> getById(@PathVariable long id) throws NegativeIdException, ChangeSetPersister.NotFoundException {
+    public ResponseEntity<SpaceShip> getById(@PathVariable Long id) throws NegativeIdException, ChangeSetPersister.NotFoundException {
         if (id < 0)
             throw new NegativeIdException();
 
@@ -119,7 +119,7 @@ public class SpaceFleetController {
             @ApiResponse(responseCode = "500", description = "Internal error", content = {@Content(mediaType = "application/json",
                     schema = @Schema(implementation = ErrorResponse.class))})})
     @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<SpaceShip> update(@PathVariable long id, @RequestBody @Valid SpaceShip modifiedSpaceShip) throws ChangeSetPersister.NotFoundException, NegativeIdException {
+    public ResponseEntity<SpaceShip> update(@PathVariable Long id, @RequestBody @Valid SpaceShip modifiedSpaceShip) throws ChangeSetPersister.NotFoundException, NegativeIdException {
         if (id < 0)
             throw new NegativeIdException();
 
@@ -145,7 +145,7 @@ public class SpaceFleetController {
             @ApiResponse(responseCode = "500", description = "Internal error", content = {@Content(mediaType = "application/json",
                     schema = @Schema(implementation = ErrorResponse.class))})})
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<SpaceShip> delete(@PathVariable long id) throws NegativeIdException, ChangeSetPersister.NotFoundException {
+    public ResponseEntity<SpaceShip> delete(@PathVariable Long id) throws NegativeIdException, ChangeSetPersister.NotFoundException {
         if (id < 0)
             throw new NegativeIdException();
 
