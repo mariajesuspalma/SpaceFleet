@@ -13,4 +13,4 @@ al rendimiento de la aplicación.
 Mejoras futuras:
 Gestión de excepciones a un nivel mayor de detalle con excepciones propias
 Aumentar la diversidad de casos, tanto negativos como positivos, testeados en los tests unitarios y de integración
-Seguridad de la API
+Seguridad de la API, que implementaría con Spring Security
